@@ -11,7 +11,7 @@
     @vite(['resources/css/app.css'])
     @livewireStyles
 </head>
-<body class="bg-gray-100 font-sans antialiased">
+<body class="bg-gray-50 dark:bg-gray-900 font-sans antialiased">
     <div class="min-h-screen flex items-center justify-center">
         <div class="w-full max-w-md">
             {{ $slot }}

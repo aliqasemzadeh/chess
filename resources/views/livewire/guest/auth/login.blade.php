@@ -1,4 +1,4 @@
-<div class="bg-white shadow-md rounded-lg p-6">
+<div class="bg-gray-200 dark:bg-gray-900 shadow-md rounded-lg p-6">
     <div class="mb-6 text-center">
         <h1 class="text-2xl font-bold text-gray-800">{{ __('Login') }} {{ __('to') }} Chess</h1>
         <p class="text-gray-600">{{ __('Enter your credentials to access your account') }}</p>
@@ -13,12 +13,12 @@
     <form wire:submit.prevent="login">
         <div class="mb-4">
             <x-input
-                wire:model.blur="username"
-                label="{{ __('Username') }}"
-                placeholder="{{ __('Enter your username') }}"
+                wire:model.blur="email"
+                label="{{ __('Email') }}"
+                placeholder="{{ __('Enter your email') }}"
                 icon="user"
             />
-            @error('username')
+            @error('email')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
             @enderror
         </div>

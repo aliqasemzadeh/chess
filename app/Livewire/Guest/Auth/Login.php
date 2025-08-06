@@ -9,10 +9,8 @@ use Livewire\Component;
 
 class Login extends Component
 {
-    #[Layout('components.layouts.guest')]
-
-    #[Rule('required|string|min:3')]
-    public $username = '';
+    #[Rule('required|email')]
+    public $email = '';
 
     #[Rule('required|string|min:6')]
     public $password = '';
@@ -23,7 +21,7 @@ class Login extends Component
     {
         $validated = $this->validate();
 
-        if (Auth::attempt(['name' => $validated['username'], 'password' => $validated['password']], $this->remember)) {
+        if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $this->remember)) {
             session()->regenerate();
 
             return redirect()->intended(route('dashboard'));
@@ -34,6 +32,7 @@ class Login extends Component
         return null;
     }
 
+    #[Layout('components.layouts.guest')]
     public function render()
     {
         return view('livewire.guest.auth.login');

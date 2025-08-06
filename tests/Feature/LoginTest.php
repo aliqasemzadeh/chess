@@ -25,12 +25,12 @@ class LoginTest extends TestCase
     public function can_login_with_correct_credentials()
     {
         $user = User::factory()->create([
-            'name' => 'testuser',
+            'email' => 'test@example.com',
             'password' => Hash::make('password123'),
         ]);
 
         Livewire::test(Login::class)
-            ->set('username', 'testuser')
+            ->set('email', 'test@example.com')
             ->set('password', 'password123')
             ->call('login')
             ->assertRedirect(route('dashboard'));
@@ -42,12 +42,12 @@ class LoginTest extends TestCase
     public function shows_error_with_invalid_credentials()
     {
         $user = User::factory()->create([
-            'name' => 'testuser',
+            'email' => 'test@example.com',
             'password' => Hash::make('password123'),
         ]);
 
         Livewire::test(Login::class)
-            ->set('username', 'testuser')
+            ->set('email', 'test@example.com')
             ->set('password', 'wrong-password')
             ->call('login')
             ->assertHasNoErrors()
@@ -57,13 +57,13 @@ class LoginTest extends TestCase
     }
 
     /** @test */
-    public function username_is_required()
+    public function email_is_required()
     {
         Livewire::test(Login::class)
-            ->set('username', '')
+            ->set('email', '')
             ->set('password', 'password123')
             ->call('login')
-            ->assertHasErrors(['username' => 'required']);
+            ->assertHasErrors(['email' => 'required']);
 
         $this->assertGuest();
     }
@@ -72,7 +72,7 @@ class LoginTest extends TestCase
     public function password_is_required()
     {
         Livewire::test(Login::class)
-            ->set('username', 'testuser')
+            ->set('email', 'test@example.com')
             ->set('password', '')
             ->call('login')
             ->assertHasErrors(['password' => 'required']);
