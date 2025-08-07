@@ -1,3 +1,2 @@
-<div>
-    {{-- Close your eyes. Count to one. That is how long forever feels. --}}
-</div>
+<x-wire-elements-pro::tailwind.slide-over>
+</x-wire-elements-pro::tailwind.slide-over>

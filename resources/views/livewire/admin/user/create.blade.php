@@ -1,3 +1,2 @@
-<div>
-    {{-- The best athlete wants his opponent at his best. --}}
-</div>
+<x-wire-elements-pro::tailwind.slide-over>
+</x-wire-elements-pro::tailwind.slide-over>

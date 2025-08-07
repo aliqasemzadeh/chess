@@ -1,3 +1,2 @@
-<div>
-    {{-- The Master doesn't talk, he acts. --}}
-</div>
+<x-wire-elements-pro::tailwind.slide-over>
+</x-wire-elements-pro::tailwind.slide-over>
