@@ -12,24 +12,26 @@ class Edit extends SlideOver
 {
     use WireUiActions;
 
-    public User $user;
+    public $userId;
+    public $user;
     public $name = '';
     public $email = '';
     public $password = '';
     public $password_confirmation = '';
 
-    public function mount(User $user)
+    public function mount($user)
     {
-        $this->user = $user;
-        $this->name = $user->name;
-        $this->email = $user->email;
+        $this->userId = $user;
+        $this->user = User::findOrFail($user);
+        $this->name = $this->user->name;
+        $this->email = $this->user->email;
     }
 
     protected function rules()
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $this->user->id,
+            'email' => 'required|email|unique:users,email,' . $this->userId,
             'password' => 'nullable|string|min:8|confirmed',
         ];
     }
