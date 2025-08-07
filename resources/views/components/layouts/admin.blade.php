@@ -11,7 +11,7 @@
 <body>
 <x-dialog />
 <div class="antialiased bg-gray-50 dark:bg-gray-900">
-    <nav class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
+    <nav class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed start-0 end-0 top-0 z-50">
         <div class="flex flex-wrap justify-between items-center">
             <div class="flex justify-start items-center">
                 <button
@@ -747,7 +747,7 @@
     <!-- Sidebar -->
 
     <aside
-        class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 start-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-e border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidenav"
         id="drawer-navigation"
     >
@@ -1068,7 +1068,7 @@
         </div>
     </aside>
 
-    <main class="p-4 md:ml-64 h-auto pt-20">
+    <main class="p-4 md:ms-64 h-auto pt-20">
         {{ $slot }}
     </main>
 </div>
