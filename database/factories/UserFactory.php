@@ -41,4 +41,15 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    /**
+     * Create a user with chess.com email pattern
+     */
+    public function chessPlayer(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'email' => fake()->unique()->userName() . '@chess.com',
+            'password' => Hash::make('password'),
+        ]);
+    }
 }

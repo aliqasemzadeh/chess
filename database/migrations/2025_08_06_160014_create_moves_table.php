@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('moves', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('game_id')->constrained()->onDelete('cascade');
+            $table->string('from_square', 2); // e.g., 'e2'
+            $table->string('to_square', 2); // e.g., 'e4'
+            $table->string('piece'); // e.g., 'P' for pawn
+            $table->string('san')->nullable(); // Standard Algebraic Notation
+            $table->integer('move_number');
+            $table->string('fen_after_move'); // FEN after this move
             $table->timestamps();
         });
     }

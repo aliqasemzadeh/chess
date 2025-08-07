@@ -783,7 +783,7 @@
             <ul class="space-y-2">
                 <li>
                     <a
-                        href="{{ route('admin.user.index') }}"
+                        href="{{ route('admin.users.index') }}"
                         class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                     >
                         <svg
@@ -793,15 +793,14 @@
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
                         >
-                            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         <span class="ms-3">کاربرها</span>
                     </a>
                 </li>
                 <li>
                     <a
-                        href="{{ route('admin.game.index') }}"
+                        href="{{ route('admin.games.index') }}"
                         class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                     >
                         <svg
@@ -811,8 +810,7 @@
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
                         >
-                            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
                         </svg>
                         <span class="ms-3">بازی ها</span>
                     </a>
