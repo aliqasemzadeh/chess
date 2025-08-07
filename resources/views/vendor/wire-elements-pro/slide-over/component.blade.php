@@ -17,7 +17,7 @@
          aria-hidden="true">
     </div>
 
-    <div class="wep-slide-over-container">
+    <div class="wep-slide-over-container z-100">
         <div class="wep-slide-over-container-backdrop" @click="closeIf('close-on-backdrop-click')" aria-hidden="true"></div>
         <div class="wep-slide-over-container-inner">
             <div x-show="open && showActiveComponent"

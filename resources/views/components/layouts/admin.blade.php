@@ -18,7 +18,7 @@
                     data-drawer-target="drawer-navigation"
                     data-drawer-toggle="drawer-navigation"
                     aria-controls="drawer-navigation"
-                    class="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer md:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    class="p-2 me-2 text-gray-600 rounded-lg cursor-pointer md:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                     <svg
                         aria-hidden="true"
@@ -60,7 +60,7 @@
                     <label for="topbar-search" class="sr-only">Search</label>
                     <div class="relative md:w-64 md:w-96">
                         <div
-                            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                            class="flex absolute inset-y-0 start-0 items-center ps-3 pointer-events-none"
                         >
                             <svg
                                 class="w-5 h-5 text-gray-500 dark:text-gray-400"
@@ -79,7 +79,7 @@
                             type="text"
                             name="email"
                             id="topbar-search"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Search"
                         />
                     </div>
@@ -93,7 +93,7 @@
                     class="p-2 mr-1 text-gray-500 rounded-lg md:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                 >
                     <span class="sr-only">Toggle search</span>
-                    <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path clip-rule="evenodd" fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path>
                     </svg>
                 </button>
@@ -747,7 +747,7 @@
     <!-- Sidebar -->
 
     <aside
-        class="fixed top-0 start-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-e border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="fixed top-0 start-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full rtl:translate-x-full md:translate-x-0 bg-white border-e border-gray-200 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidenav"
         id="drawer-navigation"
     >
@@ -756,7 +756,7 @@
                 <label for="sidebar-search" class="sr-only">Search</label>
                 <div class="relative">
                     <div
-                        class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                        class="flex absolute inset-y-0 start-0 items-center ps-3 pointer-events-none"
                     >
                         <svg
                             class="w-5 h-5 text-gray-500 dark:text-gray-400"
@@ -775,7 +775,7 @@
                         type="text"
                         name="search"
                         id="sidebar-search"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full ps-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Search"
                     />
                 </div>
@@ -796,7 +796,7 @@
                             <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                             <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                         </svg>
-                        <span class="ml-3">کاربرها</span>
+                        <span class="ms-3">کاربرها</span>
                     </a>
                 </li>
                 <li>
@@ -814,14 +814,14 @@
                             <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                             <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                         </svg>
-                        <span class="ml-3">بازی ها</span>
+                        <span class="ms-3">بازی ها</span>
                     </a>
                 </li>
             </ul>
 
         </div>
         <div
-            class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20"
+            class="hidden absolute bottom-0 start-0 justify-center p-4 space-x-4 rtl:space-x-reverse w-full lg:flex bg-white dark:bg-gray-800 z-20"
         >
             <a
                 href="#"
