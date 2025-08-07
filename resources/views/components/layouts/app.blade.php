@@ -8,6 +8,7 @@
     @livewireStyles
 </head>
 <body>
+<x-dialog />
 {{ $slot }}
 
 <!-- Require the Slide-over Pro component -->
