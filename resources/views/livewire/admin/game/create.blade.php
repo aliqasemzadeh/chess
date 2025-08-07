@@ -1,4 +1,4 @@
-<x-slide-over>
+<x-wire-elements-pro::tailwind.slide-over>
     <x-slot name="title">
         ایجاد بازی جدید
     </x-slot>
@@ -13,7 +13,9 @@
                         <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
                     @endforeach
                 </x-select>
-                <x-input-error for="white_player_id" class="mt-2" />
+                @error('white_player_id')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
@@ -24,7 +26,9 @@
                         <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
                     @endforeach
                 </x-select>
-                <x-input-error for="black_player_id" class="mt-2" />
+                @error('black_player_id')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
@@ -35,19 +39,25 @@
                     <option value="completed">پایان یافته</option>
                     <option value="abandoned">رها شده</option>
                 </x-select>
-                <x-input-error for="status" class="mt-2" />
+                @error('status')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
                 <x-label for="start_at" value="تاریخ شروع" />
                 <x-input wire:model="start_at" type="datetime-local" id="start_at" class="mt-1 block w-full" />
-                <x-input-error for="start_at" class="mt-2" />
+                @error('start_at')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
                 <x-label for="end_at" value="تاریخ پایان" />
                 <x-input wire:model="end_at" type="datetime-local" id="end_at" class="mt-1 block w-full" />
-                <x-input-error for="end_at" class="mt-2" />
+                @error('end_at')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="flex justify-end space-x-3 space-x-reverse">
@@ -60,4 +70,4 @@
             </div>
         </form>
     </x-slot>
-</x-slide-over>
+</x-wire-elements-pro::tailwind.slide-over>
