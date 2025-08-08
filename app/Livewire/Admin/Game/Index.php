@@ -46,14 +46,14 @@ class Index extends Component
 
     public function openEditSlideOver($gameId)
     {
-        $this->dispatch('slide-over.open', component: 'admin.game.edit', arguments: ['game' => $gameId]);
+        $this->dispatch('slide-over.open', component: 'admin.game.edit', arguments: ['gameId' => $gameId]);
     }
 
     public function deleteGame($gameId)
     {
         $game = Game::findOrFail($gameId);
         $game->delete();
-        
+
         $this->notification()->success(
             $title = 'بازی حذف شد',
             $description = 'بازی با موفقیت حذف شد'

@@ -21,10 +21,10 @@ class Edit extends SlideOver
     public $start_at = '';
     public $end_at = '';
 
-    public function mount($game)
+    public function mount(Game $game = null, $gameId = null)
     {
-        $this->gameId = $game;
-        $this->game = Game::findOrFail($game);
+        $this->gameId = $gameId ?? $game->id;
+        $this->game = $game ?? Game::findOrFail($this->gameId);
         $this->white_player_id = $this->game->white_player_id;
         $this->black_player_id = $this->game->black_player_id;
         $this->status = $this->game->status;

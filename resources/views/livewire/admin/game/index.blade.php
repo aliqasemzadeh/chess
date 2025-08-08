@@ -140,5 +140,4 @@
     </div>
 
     <livewire:admin.game.create />
-    <livewire:admin.game.edit />
 </div>
