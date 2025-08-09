@@ -48,17 +48,17 @@
                     </svg>
                     <span class="sr-only">Toggle sidebar</span>
                 </button>
-                <a href="https://flowbite.com" class="flex items-center justify-between mr-4">
+                <a href="https://flowbite.com" class="flex items-center justify-between me-4">
                     <img
                         src="https://flowbite.s3.amazonaws.com/logo.svg"
-                        class="mr-3 h-8"
+                        class="me-3 h-8"
                         alt="Flowbite Logo"
                     />
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
                 </a>
                 <form action="#" method="GET" class="hidden md:block md:pl-2">
                     <label for="topbar-search" class="sr-only">Search</label>
-                    <div class="relative md:w-64 md:w-96">
+                    <div class="relative md:w-96">
                         <div
                             class="flex absolute inset-y-0 start-0 items-center ps-3 pointer-events-none"
                         >
@@ -90,7 +90,7 @@
                     type="button"
                     data-drawer-toggle="drawer-navigation"
                     aria-controls="drawer-navigation"
-                    class="p-2 mr-1 text-gray-500 rounded-lg md:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                    class="p-2 me-1 text-gray-500 rounded-lg md:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                 >
                     <span class="sr-only">Toggle search</span>
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

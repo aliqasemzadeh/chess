@@ -1,215 +1,99 @@
 <div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Game Header -->
-        <div class="mb-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900">بازی شطرنج</h1>
-                    <p class="text-gray-600">
-                        {{ $game->whitePlayer->name }} (سفید) vs {{ $game->blackPlayer->name }} (سیاه)
-                    </p>
-                </div>
-                <div class="flex items-center space-x-4 space-x-reverse">
-                    @if($game->status === 'pending' && auth()->user()->isAdmin())
-                        <x-button primary wire:click="startGame">
-                            شروع بازی
-                        </x-button>
-                    @endif
-                    @if($game->status === 'active' && auth()->user()->isAdmin())
-                        <x-button flat negative wire:click="endGame('draw')">
-                            پایان مساوی
-                        </x-button>
-                    @endif
-                </div>
+    <div class="px-4 sm:px-6 lg:px-8">
+        <div class="sm:flex sm:items-center justify-between">
+            <div class="sm:flex-auto">
+                <h1 class="text-base font-semibold leading-6 text-gray-900">بازی شطرنج</h1>
+                <p class="mt-2 text-sm text-gray-700">نمایش اطلاعات بازی و انجام حرکت</p>
+            </div>
+            <div class="text-sm text-gray-600">
+                @if($game->status === 'active' && $timeLeft)
+                    <span>زمان باقی‌مانده: {{ $timeLeft }}</span>
+                @endif
             </div>
         </div>
 
-        <!-- Game Status -->
-        <div class="mb-6">
-            <div class="bg-white rounded-lg shadow p-4">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-center">
-                        <div class="text-sm font-medium text-gray-500">وضعیت بازی</div>
-                        <div class="mt-1">
-                            @switch($game->status)
-                                @case('pending')
-                                    <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">در انتظار</span>
-                                    @break
-                                @case('active')
-                                    <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-800 ring-1 ring-inset ring-green-600/20">فعال</span>
-                                    @break
-                                @case('completed')
-                                    <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-800 ring-1 ring-inset ring-blue-600/20">پایان یافته</span>
-                                    @break
-                                @case('abandoned')
-                                    <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-800 ring-1 ring-inset ring-red-600/20">رها شده</span>
-                                    @break
-                            @endswitch
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-sm font-medium text-gray-500">نوبت</div>
-                        <div class="mt-1">
-                            @if($game->status === 'active')
-                                <span class="font-medium {{ $game->turn === 'white' ? 'text-white' : 'text-black' }}">
-                                    {{ $game->turn === 'white' ? 'سفید' : 'سیاه' }}
-                                </span>
-                            @else
-                                <span class="text-gray-400">-</span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-sm font-medium text-gray-500">رنگ شما</div>
-                        <div class="mt-1">
-                            <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium {{ $playerColor === 'white' ? 'bg-white text-black ring-1 ring-inset ring-gray-300' : 'bg-gray-900 text-white' }}">
-                                {{ $playerColor === 'white' ? 'سفید' : 'سیاه' }}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-sm font-medium text-gray-500">زمان باقی‌مانده</div>
-                        <div class="mt-1 text-lg font-mono">
-                            @if($timeLeft)
-                                {{ $timeLeft }}
-                            @else
-                                <span class="text-gray-400">نامحدود</span>
-                            @endif
-                        </div>
-                    </div>
+        <!-- Players -->
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <x-card>
+                <div class="text-center">
+                    <div class="font-semibold">بازیکن سفید</div>
+                    <div>{{ $game->whitePlayer->name }}</div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Game Board and Controls -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Chess Board -->
-            <div class="lg:col-span-2">
-                <div class="bg-white rounded-lg shadow p-4">
-                    <div class="text-center mb-4">
-                        <h3 class="text-lg font-medium text-gray-900">صفحه شطرنج</h3>
-                    </div>
-                    <div id="chessboard" class="mx-auto" style="width: 400px; height: 400px;"></div>
-                    
-                    @if($canMove)
-                        <div class="mt-4 text-center">
-                            <div class="bg-green-50 border border-green-200 rounded-md p-3">
-                                <p class="text-green-800 font-medium">نوبت شماست!</p>
-                                <p class="text-green-600 text-sm">می‌توانید حرکت کنید</p>
-                            </div>
-                        </div>
-                    @elseif($game->status === 'active')
-                        <div class="mt-4 text-center">
-                            <div class="bg-yellow-50 border border-yellow-200 rounded-md p-3">
-                                <p class="text-yellow-800 font-medium">نوبت حریف شماست</p>
-                                <p class="text-yellow-600 text-sm">لطفاً منتظر بمانید</p>
-                            </div>
-                        </div>
-                    @endif
-                </div>
-            </div>
-
-            <!-- Move History and Game Info -->
-            <div class="space-y-6">
-                <!-- Move History -->
-                <div class="bg-white rounded-lg shadow p-4">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">تاریخچه حرکات</h3>
-                    <div class="space-y-2 max-h-64 overflow-y-auto">
-                        @forelse($moves as $move)
-                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
-                                <span class="text-sm font-medium">{{ $move['move_number'] }}.</span>
-                                <span class="text-sm">{{ $move['san'] ?? $move['from_square'] . '-' . $move['to_square'] }}</span>
-                            </div>
-                        @empty
-                            <p class="text-gray-500 text-sm text-center">هنوز حرکتی انجام نشده</p>
-                        @endforelse
-                    </div>
-                </div>
-
-                <!-- Game Controls -->
-                <div class="bg-white rounded-lg shadow p-4">
-                    <h3 class="text-lg font-medium text-gray-900 mb-4">کنترل‌های بازی</h3>
-                    <div class="space-y-3">
-                        <x-button full wire:click="$dispatch('refreshGame')">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                            </svg>
-                            بروزرسانی
-                        </x-button>
-                        
-                        @if($game->status === 'active' && auth()->user()->isAdmin())
-                            <x-button full flat negative wire:click="endGame('white_win')">
-                                پایان - پیروزی سفید
-                            </x-button>
-                            <x-button full flat negative wire:click="endGame('black_win')">
-                                پایان - پیروزی سیاه
-                            </x-button>
+            </x-card>
+            <x-card>
+                <div class="text-center">
+                    <div class="font-semibold">نوبت</div>
+                    <div>
+                        @if($game->status === 'active')
+                            {{ $game->turn === 'white' ? 'سفید' : 'سیاه' }}
+                        @else
+                            -
                         @endif
                     </div>
                 </div>
+            </x-card>
+            <x-card>
+                <div class="text-center">
+                    <div class="font-semibold">بازیکن سیاه</div>
+                    <div>{{ $game->blackPlayer->name }}</div>
+                </div>
+            </x-card>
+        </div>
+
+        <!-- Board placeholder and controls -->
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="md:col-span-2">
+                <x-card>
+                    <div class="aspect-square w-full bg-gray-100 flex items-center justify-center text-gray-400">
+                        صفحه شطرنج (Placeholder)
+                    </div>
+                    <div class="mt-4 flex items-center space-x-2 space-x-reverse">
+                        <x-input placeholder="از خانه (مثل e2)" wire:model.defer="from" />
+                        <x-input placeholder="به خانه (مثل e4)" wire:model.defer="to" />
+                        <x-button primary wire:click="makeMove($wire.from, $wire.to)" :disabled="!$canMove">انجام حرکت</x-button>
+                    </div>
+                    @if(!$canMove)
+                        <div class="text-xs text-gray-500 mt-2">اکنون نوبت شما نیست یا بازی فعال نیست.</div>
+                    @endif
+                </x-card>
+            </div>
+            <div>
+                <x-card>
+                    <div class="font-semibold mb-2">تاریخچه حرکات</div>
+                    <div class="max-h-80 overflow-y-auto">
+                        <ol class="list-decimal list-inside space-y-1 text-sm">
+                            @foreach($moves as $m)
+                                <li>{{ $m['san'] ?? ($m['from_square'] . '-' . $m['to_square']) }}</li>
+                            @endforeach
+                        </ol>
+                    </div>
+                </x-card>
+
+                <x-card class="mt-4">
+                    <div class="space-y-2">
+                        <div>وضعیت:
+                            @switch($game->status)
+                                @case('pending') در انتظار @break
+                                @case('active') فعال @break
+                                @case('completed') پایان یافته @break
+                                @case('abandoned') رها شده @break
+                            @endswitch
+                        </div>
+                        <div>شروع: {{ $game->start_at?->format('Y/m/d H:i') ?? '-' }}</div>
+                        <div>پایان: {{ $game->end_at?->format('Y/m/d H:i') ?? '-' }}</div>
+                        <div>FEN: <span class="font-mono text-xs break-all">{{ $game->fen }}</span></div>
+                    </div>
+
+                    @if(auth()->user()->isAdmin())
+                        <div class="mt-4 flex items-center space-x-2 space-x-reverse">
+                            <x-button primary wire:click="startGame">شروع بازی</x-button>
+                            <x-button flat positive wire:click="endGame('white_win')">برد سفید</x-button>
+                            <x-button flat negative wire:click="endGame('black_win')">برد سیاه</x-button>
+                            <x-button flat wire:click="endGame('draw')">مساوی</x-button>
+                        </div>
+                    @endif
+                </x-card>
             </div>
         </div>
     </div>
-
-    @push('scripts')
-    <script src="https://unpkg.com/chess.js@1.0.0-beta.6/dist/chess.js"></script>
-    <script src="https://unpkg.com/cm-chessboard@8.7.8/dist/cm-chessboard.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/cm-chessboard@8.7.8/dist/cm-chessboard.css">
-    
-    <script>
-        document.addEventListener('livewire:init', () => {
-            let board;
-            let chess;
-            
-            function initChessBoard() {
-                const boardElement = document.getElementById('chessboard');
-                if (!boardElement) return;
-                
-                // Initialize chess.js
-                chess = new Chess('{{ $game->fen }}');
-                
-                // Initialize chessboard
-                board = new Chessboard(boardElement, {
-                    position: chess.fen(),
-                    style: {
-                        cssClass: 'default',
-                        showCoordinates: true,
-                    },
-                    responsive: true,
-                    orientation: '{{ $playerColor === "white" ? "white" : "black" }}',
-                });
-                
-                // Handle move events
-                board.on('move', (e) => {
-                    const move = chess.move(e);
-                    if (move) {
-                        // Send move to Livewire
-                        @this.makeMove(e.from, e.to);
-                    } else {
-                        // Invalid move, revert
-                        board.setPosition(chess.fen());
-                    }
-                });
-            }
-            
-            // Initialize board when component loads
-            initChessBoard();
-            
-            // Listen for game updates
-            Livewire.on('moveMade', () => {
-                if (board && chess) {
-                    chess = new Chess('{{ $game->fen }}');
-                    board.setPosition(chess.fen());
-                }
-            });
-            
-            // Auto-refresh every 5 seconds for active games
-            @if($game->status === 'active')
-            setInterval(() => {
-                @this.refreshGame();
-            }, 5000);
-            @endif
-        });
-    </script>
-    @endpush
 </div>

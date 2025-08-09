@@ -21,16 +21,16 @@ class Play extends Component
 
     protected $listeners = ['moveMade' => 'refreshGame'];
 
-    public function mount($gameId)
+    public function mount($id)
     {
-        $this->gameId = $gameId;
+        $this->gameId = $id;
         $this->loadGame();
     }
 
     public function loadGame()
     {
         $this->game = Game::with(['whitePlayer', 'blackPlayer', 'moves'])->findOrFail($this->gameId);
-        
+
         // Check if user is authorized to access this game
         if (!$this->game->isPlayerInGame(auth()->user())) {
             abort(403, 'شما مجاز به دسترسی به این بازی نیستید');
@@ -56,7 +56,7 @@ class Play extends Component
         // Here you would implement the chess move validation using chess.js
         // For now, we'll create a simple move record
         $moveNumber = count($this->moves) + 1;
-        
+
         Move::create([
             'game_id' => $this->game->id,
             'from_square' => $from,

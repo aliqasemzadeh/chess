@@ -3,11 +3,10 @@
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
                 <h1 class="text-base font-semibold leading-6 text-gray-900">بازی‌های من</h1>
-                <p class="mt-2 text-sm text-gray-700">لیست بازی‌های شطرنج شما</p>
+                <p class="mt-2 text-sm text-gray-700">لیست بازی‌هایی که در آن‌ها شرکت دارید</p>
             </div>
         </div>
 
-        <!-- Filters -->
         <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
                 <x-input wire:model.live="search" placeholder="جستجو بر اساس نام بازیکن..." />
@@ -36,102 +35,43 @@
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead>
                             <tr>
-                                <th scope="col" class="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pl-0">بازیکنان</th>
-                                <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">رنگ شما</th>
-                                <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">وضعیت</th>
-                                <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">نوبت</th>
-                                <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">تاریخ شروع</th>
-                                <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">نتیجه</th>
-                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                                    <span class="sr-only">عملیات</span>
-                                </th>
+                                <th class="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pl-0">بازیکنان</th>
+                                <th class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">وضعیت</th>
+                                <th class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">نوبت</th>
+                                <th class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">شروع</th>
+                                <th class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">عملیات</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
                             @forelse($games as $game)
-                                @php
-                                    $playerColor = $game->getPlayerColor(auth()->user());
-                                    $opponent = $playerColor === 'white' ? $game->blackPlayer : $game->whitePlayer;
-                                @endphp
                                 <tr>
                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                                         <div class="flex flex-col">
-                                            <span class="font-medium">{{ auth()->user()->name }} ({{ $playerColor === 'white' ? 'سفید' : 'سیاه' }})</span>
-                                            <span class="text-gray-500">vs {{ $opponent->name }} ({{ $playerColor === 'white' ? 'سیاه' : 'سفید' }})</span>
+                                            <span class="font-medium">{{ $game->whitePlayer->name }} (سفید)</span>
+                                            <span class="text-gray-500">{{ $game->blackPlayer->name }} (سیاه)</span>
                                         </div>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium {{ $playerColor === 'white' ? 'bg-white text-black ring-1 ring-inset ring-gray-300' : 'bg-gray-900 text-white' }}">
-                                            {{ $playerColor === 'white' ? 'سفید' : 'سیاه' }}
-                                        </span>
-                                    </td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         @switch($game->status)
-                                            @case('pending')
-                                                <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">در انتظار</span>
-                                                @break
-                                            @case('active')
-                                                <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-800 ring-1 ring-inset ring-green-600/20">فعال</span>
-                                                @break
-                                            @case('completed')
-                                                <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-800 ring-1 ring-inset ring-blue-600/20">پایان یافته</span>
-                                                @break
-                                            @case('abandoned')
-                                                <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-800 ring-1 ring-inset ring-red-600/20">رها شده</span>
-                                                @break
+                                            @case('pending')<span class="px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">در انتظار</span>@break
+                                            @case('active')<span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">فعال</span>@break
+                                            @case('completed')<span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">پایان یافته</span>@break
+                                            @case('abandoned')<span class="px-2 py-1 text-xs bg-red-100 text-red-800 rounded">رها شده</span>@break
                                         @endswitch
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        @if($game->status === 'active')
-                                            <span class="font-medium {{ $game->turn === 'white' ? 'text-white' : 'text-black' }}">
-                                                {{ $game->turn === 'white' ? 'سفید' : 'سیاه' }}
-                                            </span>
-                                        @else
-                                            -
-                                        @endif
+                                        {{ $game->status === 'active' ? ($game->turn === 'white' ? 'سفید' : 'سیاه') : '-' }}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         {{ $game->start_at?->format('Y/m/d H:i') ?? '-' }}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                        @if($game->result)
-                                            @switch($game->result)
-                                                @case('white_win')
-                                                    <span class="text-green-600">{{ $playerColor === 'white' ? 'شما برنده شدید' : 'شما باختید' }}</span>
-                                                    @break
-                                                @case('black_win')
-                                                    <span class="text-green-600">{{ $playerColor === 'black' ? 'شما برنده شدید' : 'شما باختید' }}</span>
-                                                    @break
-                                                @case('draw')
-                                                    <span class="text-gray-600">مساوی</span>
-                                                    @break
-                                            @endswitch
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-                                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                        @if($game->status === 'active' || $game->status === 'pending')
-                                            <x-button primary sm href="{{ route('user.games.play', $game->id) }}">
-                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                                بازی
-                                            </x-button>
-                                        @else
-                                            <x-button flat sm href="{{ route('user.games.play', $game->id) }}">
-                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                                </svg>
-                                                مشاهده
-                                            </x-button>
-                                        @endif
+                                        <a href="{{ route('user.games.play', ['id' => $game->id]) }}" class="text-primary-600 hover:underline">ورود به بازی</a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="px-3 py-4 text-sm text-gray-500 text-center">هیچ بازی‌ای یافت نشد</td>
+                                    <td colspan="5" class="px-3 py-4 text-sm text-gray-500 text-center">هیچ بازی‌ای یافت نشد</td>
                                 </tr>
                             @endforelse
                         </tbody>
