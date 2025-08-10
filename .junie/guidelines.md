@@ -24,8 +24,8 @@
 
 - FlowBite Components
     - Documentation: https://raw.githubusercontent.com/themesberg/flowbite/refs/heads/main/llms-full.txt
-- BladewindUI
-    - Installation: https://bladewindui.com/install
+- WireUI Components
+    - Documentation: https://github.com/wireui/wireui/blob/main/docs/components/alert.md
 - Modal System
     - Using: https://github.com/ElegantEngineeringTech/livewire-modal
 
