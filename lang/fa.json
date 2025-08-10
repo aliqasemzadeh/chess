@@ -224,6 +224,8 @@
     "View :name": "مشاهده :name",
     "Web Server is Down": "وب سرور از کار افتاده است",
     "Whoops!": "وای!",
+    "Email": "ایمیل",
+    "Password": "رمز عبور",
     "Yes": "بله",
     "You are receiving this email because we received a password reset request for your account.": "شما این ایمیل را به دلیل درخواست رمزعبور جدید دریافت کرده‌اید."
 }
