@@ -68,8 +68,8 @@
                     </div>
                 </div>
                 <div class="ml-auto hidden place-self-center lg:col-span-6 lg:flex">
-                    <img class="mx-auto dark:hidden" src="{{ asset('images/login.jpg') }}" alt="illustration" />
-                    <img class="mx-auto hidden dark:flex" src="{{ asset('images/login.jpg') }}" alt="illustration" />
+                    <img class="mx-auto dark:hidden" src="{{ asset('images/guest.svg') }}" alt="illustration" />
+                    <img class="mx-auto hidden dark:flex" src="{{ asset('images/guest.svg') }}" alt="illustration" />
                 </div>
             </div>
         </section>
