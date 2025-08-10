@@ -257,5 +257,15 @@
     "Users": "کاربرها",
     "Dashboard": "داشبرد",
     "I agree to the terms and conditions": "من قوانین سایت را قبول دارم.",
-    "Log in to your account": "ورود به حساب کاربری"
+    "Log in to your account": "ورود به حساب کاربری",
+    "Name": "نام",
+    "Created At": "تاریخ ایجاد",
+    "Add User": "افزودن کاربر",
+    "Search users...": "جستجوی کاربر...",
+    "No results found.": "موردی یافت نشد.",
+    "User created successfully": "کاربر با موفقیت ایجاد شد",
+    "User updated successfully": "کاربر با موفقیت به‌روز شد",
+    "User deleted successfully": "کاربر با موفقیت حذف شد",
+    "Are you sure?": "آیا مطمئن هستید؟",
+    "Leave blank to keep current": "برای حفظ رمز فعلی خالی بگذارید"
 }

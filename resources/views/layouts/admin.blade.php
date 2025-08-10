@@ -51,6 +51,6 @@
 </main>
 
 @livewireScripts
-<livewire:modal />
+@livewire('wire-elements-modal')
 </body>
 </html>
