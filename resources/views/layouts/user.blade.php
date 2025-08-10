@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    <title>{{ $title ?? __('Guest') }} - {{ config('app.name') }}</title>
+    <title>{{ $title ?? __('Admin') }} - {{ config('app.name') }}</title>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900">
 <header>
