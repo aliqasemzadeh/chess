@@ -7,6 +7,7 @@
     <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
+    @livewireStyles
     <title>{{ $title ?? 'Guest' }}</title>
 </head>
 <body class="bg-gray-50 text-slate-800">
@@ -32,5 +33,7 @@
     <footer class="mt-8 py-6 text-center text-sm text-slate-500">
         © {{ date('Y') }}. All rights reserved.
     </footer>
+
+    @livewireScripts
 </body>
 </html>

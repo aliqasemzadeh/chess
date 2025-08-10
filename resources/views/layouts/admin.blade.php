@@ -7,6 +7,7 @@
     <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
+    @livewireStyles
     <title>{{ $title ?? 'Admin' }}</title>
 </head>
 <body class="bg-gray-50 text-slate-800">
@@ -44,5 +45,7 @@
             </main>
         </div>
     </div>
+
+    @livewireScripts
 </body>
 </html>
