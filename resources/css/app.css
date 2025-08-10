@@ -2,6 +2,7 @@
 @import 'tailwindcss';
 
 @import "flowbite/src/themes/default.css";
+@import '../../vendor/wireui/wireui/ts/global.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -9,9 +10,14 @@
 @source '../**/*.js';
 @source "../../node_modules/flowbite";
 
+@source '../../vendor/wireui/wireui';
+
 @plugin "flowbite/plugin";
 
 @theme {
     --font-sans: Vazirmatn, Tahoma, 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+*, body, html, div, span, applet, object, iframe {
+    font-family: Vazirmatn, Tahoma, sans-serif;
 }

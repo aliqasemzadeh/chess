@@ -4,24 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />
-    <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
     @livewireStyles
     <title>{{ $title ?? 'User' }}</title>
-    <script>
-        (function() {
-            try {
-                const saved = localStorage.getItem('color-theme');
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                const isDark = saved === 'dark' || (saved === 'system' && prefersDark) || (!saved && prefersDark);
-                if (isDark) document.documentElement.classList.add('dark');
-                else document.documentElement.classList.remove('dark');
-            } catch (e) {}
-        })();
-    </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-slate-800 dark:text-slate-100">
+<x-notifications position="bottom-end" />
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar (RTL on right) -->
         <aside class="hidden md:block w-64 bg-white dark:bg-gray-800 border-l border-slate-200 dark:border-gray-700">
@@ -64,27 +51,7 @@
             </main>
         </div>
     </div>
-
+    @wireUiScripts
     @livewireScripts
-    <script>
-        (function(){
-            const btn = document.getElementById('theme-toggle-user');
-            const menu = document.getElementById('theme-menu-user');
-            if (!btn || !menu) return;
-            const apply = (mode) => {
-                try {
-                    localStorage.setItem('color-theme', mode);
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    const dark = mode === 'dark' || (mode === 'system' && prefersDark);
-                    document.documentElement.classList.toggle('dark', dark);
-                } catch(e) {}
-            };
-            btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
-            menu.querySelectorAll('[data-theme-value]').forEach(el => {
-                el.addEventListener('click', () => { apply(el.getAttribute('data-theme-value')); menu.classList.add('hidden'); });
-            });
-            document.addEventListener('click', (e) => { if (!menu.contains(e.target) && e.target !== btn) menu.classList.add('hidden'); });
-        })();
-    </script>
 </body>
 </html>

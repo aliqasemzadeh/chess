@@ -16,7 +16,7 @@
         "laravel/reverb": "^1.0",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6",
-        "mkocansey/bladewind": "^3.1"
+        "wireui/wireui": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

@@ -9,70 +9,48 @@
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
     @livewireStyles
     <title>{{ $title ?? 'Guest' }}</title>
-    <script>
-        (function() {
-            try {
-                const saved = localStorage.getItem('color-theme');
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                const isDark = saved === 'dark' || (saved === 'system' && prefersDark) || (!saved && prefersDark);
-                if (isDark) document.documentElement.classList.add('dark');
-                else document.documentElement.classList.remove('dark');
-            } catch (e) {}
-        })();
-    </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-slate-800 dark:text-slate-100 min-h-screen">
-    <header class="bg-white dark:bg-gray-800 border-b border-slate-200 dark:border-gray-700">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="/" class="font-semibold">سایت</a>
-            <div class="flex items-center gap-3">
-                <nav class="hidden sm:flex items-center gap-4 text-sm">
-                    <a href="/login" class="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">ورود</a>
-                    <a href="/register" class="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">ثبت نام</a>
-                </nav>
-                <div class="relative">
-                    <button id="theme-toggle-guest" type="button" class="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm bg-slate-100 dark:bg-gray-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-gray-600">تم</button>
-                    <div id="theme-menu-guest" class="hidden absolute z-20 mt-2 w-40 rounded-md border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg">
-                        <button data-theme-value="light" class="block w-full text-right px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-gray-700">روشن</button>
-                        <button data-theme-value="dark" class="block w-full text-right px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-gray-700">تاریک</button>
-                        <button data-theme-value="system" class="block w-full text-right px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-gray-700">سیستم</button>
-                    </div>
-                </div>
+<x-notifications position="bottom-end" />
+<header class="bg-gray-900 pattern">
+    <div class="container px-6 mx-auto">
+        <nav class="flex py-6 flex-row justify-between items-center">
+            <a href="#">
+                @includeIf('logo')
+                54555
+            </a>
+
+            <div class="flex items-center mt-2 -mx-2 sm:mt-0">
+                <button id="theme-toggle" type="button"
+                        class="justify-center w-100 inline-flex text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                            fill-rule="evenodd" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+    </div>
+</header>
+<div class="flex mt-8 justify-center lg:mt-0">
+    <div class="w-full h-full max-w-md bg-white rounded-lg dark:bg-gray-800">
+        <div class="px-6 py-8 text-center">
+            <h2 class="text-2xl font-semibold text-gray-700 dark:text-white"></h2>
+            <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">
+                {{ $slot }}
             </div>
         </div>
-    </header>
+    </div>
+</div>
 
-    <!-- Flowbite-like default login page wrapper -->
-    <main class="flex items-center justify-center py-8 sm:py-12">
-        <div class="w-full max-w-md p-6 sm:p-8 bg-white dark:bg-gray-800 rounded-lg border border-slate-200 dark:border-gray-700 shadow">
-            {{ $slot }}
-        </div>
-    </main>
-
-    <footer class="mt-auto py-6 text-center text-sm text-slate-500 dark:text-slate-400">
-        © {{ date('Y') }}. همه حقوق محفوظ است.
-    </footer>
-
-    @livewireScripts
-    <script>
-        (function(){
-            const btn = document.getElementById('theme-toggle-guest');
-            const menu = document.getElementById('theme-menu-guest');
-            if (!btn || !menu) return;
-            const apply = (mode) => {
-                try {
-                    localStorage.setItem('color-theme', mode);
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    const dark = mode === 'dark' || (mode === 'system' && prefersDark);
-                    document.documentElement.classList.toggle('dark', dark);
-                } catch(e) {}
-            };
-            btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
-            menu.querySelectorAll('[data-theme-value]').forEach(el => {
-                el.addEventListener('click', () => { apply(el.getAttribute('data-theme-value')); menu.classList.add('hidden'); });
-            });
-            document.addEventListener('click', (e) => { if (!menu.contains(e.target) && e.target !== btn) menu.classList.add('hidden'); });
-        })();
-    </script>
+@wireUiScripts
+@livewireScripts
 </body>
 </html>
