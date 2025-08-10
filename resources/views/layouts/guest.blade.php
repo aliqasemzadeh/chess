@@ -55,9 +55,25 @@
 </header>
     <!-- Main content -->
     <main>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {{ $slot }}
-        </div>
+        <section class="bg-gray-50 dark:bg-gray-900">
+            <div class="mx-auto grid h-screen max-w-screen-xl px-4 py-8 lg:grid-cols-12 lg:gap-20 lg:py-16">
+                <div class="w-full place-self-center lg:col-span-6">
+                    <div class="mx-auto max-w-lg rounded-lg bg-white p-4 shadow-sm dark:bg-gray-800 sm:p-6">
+                        <a href="#" class="mb-4 inline-flex items-center text-xl font-semibold text-gray-900 dark:text-white sm:mb-6">
+                            بازی شطرنج
+                        </a>
+                        <h1 class="mb-2 text-2xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white">خوش آمدید</h1>
+                        <p class=" text-gray-500 dark:text-gray-400">حساب کاربری ندارید؟ <a class="font-medium text-primary-700 hover:underline dark:text-primary-500" href="{{ route('register') }}">ثبت نام</a></p>
+                        {{ $slot }}
+                    </div>
+                </div>
+                <div class="ml-auto hidden place-self-center lg:col-span-6 lg:flex">
+                    <img class="mx-auto dark:hidden" src="{{ asset('images/login.jpg') }}" alt="illustration" />
+                    <img class="mx-auto hidden dark:flex" src="{{ asset('images/login.jpg') }}" alt="illustration" />
+                </div>
+            </div>
+        </section>
+
     </main>
 
 
