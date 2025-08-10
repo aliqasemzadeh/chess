@@ -1,3 +1,6 @@
+<x-slot name="title">
+    {{ __('Login') }}
+</x-slot>
 <form class="mt-4 space-y-4 sm:mt-6 sm:space-y-6" wire:submit="login">
     <div class="space-y-3">
         <a
@@ -96,12 +99,20 @@
         </div>
         <a href="#" class="text-sm font-medium text-primary-700 hover:underline dark:text-primary-500">{{ __('Forgot your password?') }}</a>
     </div>
-    <button
-        type="submit"
-        wire:loading.attr="disabled"
-        class="w-full rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-        <span wire:loading.remove>{{ __('Log in to your account') }}</span>
-        <span wire:loading>{{ __('Logging in...') }}</span>
-    </button>
+    <div class="flex flex-col items-center justify-center gap-2">
+        <button
+            type="submit"
+            wire:loading.attr="disabled"
+            class="w-full rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+            <span>{{ __('Log in to your account') }}</span>
+        </button>
+        <a
+            href="{{ route('register') }}"
+            class="mt-2 w-full  px-5 py-2.5 text-center focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+        >
+            <span>{{ __('Register') }}</span>
+        </a>
+    </div>
+
 </form>
