@@ -10,6 +10,7 @@ class Login extends Component
 {
     public string $email = '';
     public string $password = '';
+    public bool $remember = false;
 
     #[Layout('layouts.guest')]
     public function render()
@@ -33,12 +34,23 @@ class Login extends Component
         ];
     }
 
+    protected function messages(): array
+    {
+        return [
+            'email.required' => __('The email field is required.'),
+            'email.email' => __('Please enter a valid email address.'),
+            'password.required' => __('The password field is required.'),
+        ];
+    }
+
     public function login()
     {
         $validated = $this->validate();
 
-        if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], false)) {
+        if (Auth::attempt(['email' => $validated['email'], 'password' => $validated['password']], $this->remember)) {
             request()->session()->regenerate();
+            
+            // Redirect to intended location or dashboard
             return $this->redirectIntended('/');
         }
 

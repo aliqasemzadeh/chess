@@ -1,4 +1,4 @@
-<form class="mt-4 space-y-4 sm:mt-6 sm:space-y-6" action="#">
+<form class="mt-4 space-y-4 sm:mt-6 sm:space-y-6" wire:submit="login">
     <div class="space-y-3">
         <a
             href="#"
@@ -54,23 +54,29 @@
             <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">{{ __('Email') }}</label>
             <input
                 type="email"
-                name="email"
+                wire:model="email"
                 id="email"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm @error('email') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror"
                 placeholder="{{ __('email_placeholder') }}"
                 required
             />
+            @error('email')
+                <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+            @enderror
         </div>
         <div>
             <label for="password" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">{{ __('Password') }}</label>
             <input
                 type="password"
-                name="password"
+                wire:model="password"
                 id="password"
                 placeholder="{{ __('password_placeholder') }}"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm @error('password') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror"
                 required
             />
+            @error('password')
+                <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+            @enderror
         </div>
     </div>
     <div class="flex items-center justify-between">
@@ -78,6 +84,7 @@
             <div class="flex h-5 items-center">
                 <input
                     id="remember"
+                    wire:model="remember"
                     aria-describedby="remember"
                     type="checkbox"
                     class="focus:ring-3 h-4 w-4 rounded-sm border border-gray-300 bg-gray-50 focus:ring-primary-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600"
@@ -91,8 +98,10 @@
     </div>
     <button
         type="submit"
-        class="w-full rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+        wire:loading.attr="disabled"
+        class="w-full rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 disabled:opacity-50 disabled:cursor-not-allowed"
     >
-        {{ __('Log in to your account') }}
+        <span wire:loading.remove>{{ __('Log in to your account') }}</span>
+        <span wire:loading>{{ __('Logging in...') }}</span>
     </button>
 </form>
