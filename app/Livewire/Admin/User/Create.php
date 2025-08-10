@@ -5,8 +5,9 @@ namespace App\Livewire\Admin\User;
 use App\Models\User;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Livewire\Component;
+use LivewireUI\Modal\ModalComponent;
 
-class Create extends Component
+class Create extends ModalComponent
 {
     public string $name = '';
     public string $email = '';

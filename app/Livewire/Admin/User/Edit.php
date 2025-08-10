@@ -5,8 +5,9 @@ namespace App\Livewire\Admin\User;
 use App\Models\User;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Livewire\Component;
+use LivewireUI\Modal\ModalComponent;
 
-class Edit extends Component
+class Edit extends ModalComponent
 {
     public ?User $user = null;
     public string $name = '';

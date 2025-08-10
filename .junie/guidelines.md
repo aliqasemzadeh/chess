@@ -6,7 +6,6 @@
 - Livewire 3
 - AlpineJS
 - FlowBite UI Framework
-- BladewindUI Components
 - Chess.js & Chessboard.js
 
 ## Core Requirements
@@ -25,7 +24,7 @@
 - FlowBite Components
     - Documentation: https://raw.githubusercontent.com/themesberg/flowbite/refs/heads/main/llms-full.txt
 - Modal System
-    - Using: https://github.com/ElegantEngineeringTech/livewire-modal
+    - Using: https://github.com/wire-elements/modal
 
 ## Chess Implementation
 

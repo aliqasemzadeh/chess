@@ -3,8 +3,9 @@
 namespace App\Livewire\Admin\Game;
 
 use Livewire\Component;
+use LivewireUI\Modal\ModalComponent;
 
-class Create extends Component
+class Create extends ModalComponent
 {
     public function render()
     {
