@@ -24,7 +24,7 @@
                     <clipPath id="clip0_13183_10121"><rect width="20" height="20" fill="white" transform="translate(0.5)" /></clipPath>
                 </defs>
             </svg>
-            ورود با گوگل
+            {{ __('Sign in with Google') }}
         </a>
         <a
             href="#"
@@ -41,33 +41,33 @@
                     <clipPath id="clip0_13183_29163"><rect width="20" height="20" fill="white" transform="translate(0.5)" /></clipPath>
                 </defs>
             </svg>
-            ورود با اپل
+            {{ __('Sign in with Apple') }}
         </a>
     </div>
     <div class="flex items-center">
         <div class="h-px w-full bg-gray-200 dark:bg-gray-700"></div>
-        <div class="px-5 text-center text-gray-500 dark:text-gray-400">یا</div>
+        <div class="px-5 text-center text-gray-500 dark:text-gray-400">{{ __('Or') }}</div>
         <div class="h-px w-full bg-gray-200 dark:bg-gray-700"></div>
     </div>
     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
         <div>
-            <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">ایمیل</label>
+            <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">{{ __('Email') }}</label>
             <input
                 type="email"
                 name="email"
                 id="email"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
-                placeholder="name@company.com"
+                placeholder="{{ __('email_placeholder') }}"
                 required
             />
         </div>
         <div>
-            <label for="password" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">رمز عبور</label>
+            <label for="password" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">{{ __('Password') }}</label>
             <input
                 type="password"
                 name="password"
                 id="password"
-                placeholder="••••••••"
+                placeholder="{{ __('password_placeholder') }}"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
                 required
             />
@@ -84,15 +84,15 @@
                 />
             </div>
             <div class="mr-3 text-sm">
-                <label for="remember" class="text-gray-500 dark:text-gray-300">مرا به خاطر بسپار</label>
+                <label for="remember" class="text-gray-500 dark:text-gray-300">{{ __('Remember me') }}</label>
             </div>
         </div>
-        <a href="#" class="text-sm font-medium text-primary-700 hover:underline dark:text-primary-500">فراموشی رمز عبور؟</a>
+        <a href="#" class="text-sm font-medium text-primary-700 hover:underline dark:text-primary-500">{{ __('Forgot your password?') }}</a>
     </div>
     <button
         type="submit"
         class="w-full rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
     >
-        ورود به حساب کاربری
+        {{ __('Log in to your account') }}
     </button>
 </form>
