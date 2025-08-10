@@ -44,11 +44,13 @@
     </nav>
 </header>
 <!-- Main content -->
-<main>
-    {{ $slot }}
+<main class="px-4 lg:px-6 py-2.5">
+    <div class="mx-auto max-w-screen-xl">
+        {{ $slot }}
+    </div>
 </main>
 
-
 @livewireScripts
+<livewire:modal />
 </body>
 </html>
