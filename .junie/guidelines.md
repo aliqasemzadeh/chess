@@ -1,13 +1,37 @@
-My Stacks:
-Laravel 12
-Livewire 3
-AlpineJS
-FlowBite: Get Info from https://raw.githubusercontent.com/themesberg/flowbite/refs/heads/main/llms-full.txt
-bladewindui:https://bladewindui.com/install
-Main language is Farsi (fa): add lang/fa.json laravel translate
-Page Must Be RTL : https://flowbite.com/docs/customize/rtl/
-Websocket: https://laravel.com/docs/12.x/reverb
-Edit/Create Modals: https://github.com/ElegantEngineeringTech/livewire-modal
-Chessboard: https://chessboardjs.com/docs chessboard view
-chess.js: https://github.com/jhlywa/chess.js chess move validation
-Add Dark/Light themes : https://flowbite.com/docs/customize/dark-mode/
+# Project Configuration Guidelines
+
+## Technology Stack
+
+- Laravel 12
+- Livewire 3
+- AlpineJS
+- FlowBite UI Framework
+- BladewindUI Components
+- Chess.js & Chessboard.js
+
+## Core Requirements
+
+- Primary Language: Farsi (fa)
+    - Required: lang/fa.json for Laravel translations
+- RTL Layout Support
+    - Configuration: https://flowbite.com/docs/customize/rtl/
+- Dark/Light Theme Support
+    - Implementation: https://flowbite.com/docs/customize/dark-mode/
+- WebSocket Integration
+    - Using Laravel Reverb: https://laravel.com/docs/12.x/reverb
+
+## UI Components
+
+- FlowBite Components
+    - Documentation: https://raw.githubusercontent.com/themesberg/flowbite/refs/heads/main/llms-full.txt
+- BladewindUI
+    - Installation: https://bladewindui.com/install
+- Modal System
+    - Using: https://github.com/ElegantEngineeringTech/livewire-modal
+
+## Chess Implementation
+
+- Chessboard View
+    - Library: https://chessboardjs.com/docs
+- Move Validation
+    - Library: https://github.com/jhlywa/chess.js
