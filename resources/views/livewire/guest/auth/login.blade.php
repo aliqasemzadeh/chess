@@ -8,9 +8,9 @@
             </p>
         </div>
 
-        <form wire:submit.prevent="login" class="mt-8 space-y-6">
-            <div class="-space-y-px rounded-md shadow-sm">
-                <div class="mb-4">
+        <div class="bg-white p-6 rounded-lg shadow border border-gray-100">
+            <form wire:submit.prevent="login" class="space-y-6">
+                <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
                     <input wire:model.defer="email" id="email" name="email" type="email" autocomplete="email" required
                            class="mt-1 block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" placeholder="you@example.com">
@@ -27,25 +27,25 @@
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
-            </div>
 
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <input id="remember_me" name="remember_me" type="checkbox" disabled
-                           class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="remember_me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember_me" name="remember_me" type="checkbox" disabled
+                               class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                        <label for="remember_me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+                    </div>
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
+                    </div>
                 </div>
-                <div class="text-sm">
-                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</a>
-                </div>
-            </div>
 
-            <div>
-                <button type="submit"
-                        class="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-4 text-sm font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    Sign in
-                </button>
-            </div>
-        </form>
+                <div>
+                    <button type="submit"
+                            class="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2.5 px-4 text-sm font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Sign in
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
