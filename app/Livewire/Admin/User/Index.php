@@ -55,12 +55,12 @@ class Index extends Component
     public function openCreateModal()
     {
         // Dispatch event that livewire-modal package listens to
-        $this->dispatch('modal-open', component: 'admin.user.create');
+        $this->dispatch('openModal', component: 'admin.user.create');
     }
 
     public function openEditModal(int $userId)
     {
-        $this->dispatch('modal-open', component: 'admin.user.edit', arguments: ['userId' => $userId]);
+        $this->dispatch('openModal', component: 'admin.user.edit', arguments: ['userId' => $userId]);
     }
 
     public function delete(int $userId)
