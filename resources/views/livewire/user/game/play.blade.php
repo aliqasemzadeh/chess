@@ -58,11 +58,12 @@
 
                     this.board = new Chessboard(el, {
                         position: this.fen,
-                        assetsUrl: 'https://shaack.com/projekte/cm-chessboard/assets/',
-                        sprite: {
-                            url: 'https://shaack.com/projekte/cm-chessboard/assets/images/chessboard-sprite-staunty.svg'
-                        },
-                        style: { cssClass: 'cm-default', showCoordinates: true }
+                        // Use Vite-built same-origin piece sprite to avoid CORS
+                        style: {
+                            cssClass: 'cm-default',
+                            showCoordinates: true,
+                            pieces: { file: (window.CmChessboardPieces ? window.CmChessboardPieces.stauntyUrl : undefined) }
+                        }
                     });
 
                     // Enable move input and validate with chess.js
@@ -70,18 +71,36 @@
                     this.board.enableMoveInput((event) => {
                         this.error = '';
                         if (event.type === INPUT_EVENT_TYPE.moveInputStarted) {
-                            if (this.game.game_over() || !this.isUsersTurn()) return false;
+                            if (this.game.isGameOver() || !this.isUsersTurn()) return false;
                             return true;
                         }
                         if (event.type === INPUT_EVENT_TYPE.validateMoveInput) {
                             const from = event.squareFrom;
                             const to = event.squareTo;
                             const fenBefore = this.fen;
-                            const move = this.game.move({ from, to, promotion: 'q' });
+
+                            // Pre-validate using chess.js generated legal moves to avoid exceptions
+                            const legal = this.game.moves({ square: from, verbose: true }) || [];
+                            const candidate = legal.find(m => m.to === to);
+                            if (!candidate) {
+                                this.error = '{{ __('حرکت نامعتبر است') }}';
+                                return false; // snap back
+                            }
+
+                            let move;
+                            try {
+                                // Use the candidate so chess.js is guaranteed to accept it
+                                move = this.game.move({ from, to, promotion: candidate.promotion || 'q' });
+                            } catch (e) {
+                                console.error('Invalid move attempt caught:', e);
+                                this.error = '{{ __('حرکت نامعتبر است') }}';
+                                return false; // snap back
+                            }
                             if (!move) {
                                 this.error = '{{ __('حرکت نامعتبر است') }}';
                                 return false; // snap back
                             }
+
                             this.fen = this.game.fen();
                             // Reflect on board
                             this.board.setPosition(this.fen, true);
@@ -98,7 +117,7 @@
                                 san: move.san,
                                 fen_before: fenBefore,
                                 fen_after: this.fen,
-                                meta: { check: this.game.in_check(), checkmate: this.game.in_checkmate(), draw: this.game.in_draw() }
+                                meta: { check: this.game.isCheck(), checkmate: this.game.isCheckmate(), draw: this.game.isDraw() }
                             };
                             $wire.saveMove(payload);
                             return true;
