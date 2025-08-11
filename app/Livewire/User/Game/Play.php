@@ -18,13 +18,17 @@ class Play extends Component
 
     public function mount(int $id)
     {
-        $this->game = Game::findOrFail($id);
+        $this->game = Game::with(['white', 'black', 'moves'])
+            ->findOrFail($id);
         $this->fen = $this->game->fen;
     }
 
     #[Layout('layouts.user')]
     public function render()
     {
+        // Ensure moves and players are loaded and ordered
+        $this->game->loadMissing(['white', 'black', 'moves']);
+
         return view('livewire.user.game.play', [
             'game' => $this->game,
             'fen' => $this->fen,
@@ -76,6 +80,9 @@ class Play extends Component
         $this->game->turn = $this->game->turn === Game::TURN_WHITE ? Game::TURN_BLACK : Game::TURN_WHITE;
         $this->game->save();
         $this->fen = $this->game->fen;
+
+        // Refresh game with moves to update history in UI
+        $this->game->load(['moves', 'white', 'black']);
 
         // Broadcast the move to other subscribers
         broadcast(new GameMoveJob(

@@ -28,6 +28,11 @@ class Game extends Model
         return $this->belongsTo(User::class, 'black_user_id');
     }
 
+    public function moves()
+    {
+        return $this->hasMany(Move::class)->orderBy('move_number');
+    }
+
     // Accessor for a human-readable turn label
     public function getTurnLabelAttribute(): string
     {

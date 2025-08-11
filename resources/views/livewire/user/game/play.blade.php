@@ -32,7 +32,17 @@
         <div>
             <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
                 <h3 class="text-md font-semibold mb-3 dark:text-white">{{ __('حرکت‌ها') }}</h3>
-                <ol class="list-decimal list-inside space-y-1 max-h-[480px] overflow-auto" id="moveList"></ol>
+                <ol class="list-decimal list-inside space-y-1 max-h-[480px] overflow-auto" id="moveList">
+                    @foreach($game->moves as $move)
+                        <li class="text-sm text-gray-800 dark:text-gray-100" wire:key="move-{{ $move->id }}">
+                            <span class="font-medium">#{{ $move->move_number }}</span>
+                            <span class="px-1 text-xs rounded bg-gray-100 dark:bg-gray-700">
+                                {{ $move->user_id === $game->white_user_id ? __('White') : __('Black') }}
+                            </span>
+                            <span class="ml-1">{{ $move->san }}</span>
+                        </li>
+                    @endforeach
+                </ol>
             </div>
         </div>
     </div>
