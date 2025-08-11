@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Chess\Game;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,6 +33,19 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * Relationships
+     */
+    public function gamesAsWhite()
+    {
+        return $this->hasMany(Game::class, 'white_user_id');
+    }
+
+    public function gamesAsBlack()
+    {
+        return $this->hasMany(Game::class, 'black_user_id');
+    }
 
     /**
      * Get the attributes that should be cast.

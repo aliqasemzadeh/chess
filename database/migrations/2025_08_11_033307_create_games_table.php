@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('white_user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('black_user_id')->constrained('users')->cascadeOnDelete();
+            $table->enum('turn', ['white', 'black'])->default('white');
+            $table->text('fen');
             $table->timestamps();
         });
     }
