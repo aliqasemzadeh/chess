@@ -52,7 +52,7 @@ window.PlayChess = ({ initialFen, gameId, authUserId, whiteUserId, blackUserId, 
                     this.board = new Chessboard(el, {
                         position: this.fen,
                         style: {
-                            cssClass: "default",
+                            cssClass: "blue",
                             showCoordinates: true,
                             pieces: pieceSpriteUrl ? { file: pieceSpriteUrl } : undefined
                         }
