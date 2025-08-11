@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/', App\Livewire\User\Dashboard\Index::class)->name('home');
+    Route::get('/', App\Livewire\User\Game\Index::class)->name('home');
     Route::get('/user/game/index', App\Livewire\User\Game\Index::class)->name('user.game.index');
     Route::get('/user/game/play/{id}', App\Livewire\User\Game\Play::class)->name('user.game.play');
 

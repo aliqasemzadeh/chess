@@ -78,13 +78,17 @@ class Play extends Component
         $this->fen = $this->game->fen;
 
         // Broadcast the move to other subscribers
-        GameMoveJob::dispatch($this->game->id, [
-            'from' => $move->from,
-            'to' => $move->to,
-            'san' => $move->san,
-            'move_number' => $move->move_number,
-            'user_id' => $move->user_id,
-        ], $this->game->fen);
+        broadcast(new GameMoveJob(
+            $this->game->id,
+            [
+                'from' => $move->from,
+                'to' => $move->to,
+                'san' => $move->san,
+                'move_number' => $move->move_number,
+                'user_id' => $move->user_id,
+            ],
+            $this->game->fen
+        ));
 
         // Dispatch browser event (optional in-UI hook)
         $this->dispatch('move-saved', fen: $this->fen);
