@@ -11,10 +11,10 @@
         x-on:close.stop="setShowPropertyTo(false)"
         x-on:keydown.escape.window="closeModalOnEscape()"
         x-show="show"
-        class="fixed inset-0 z-50 overflow-y-auto"
+        class="fixed inset-0 z-50 overflow-y-hidden"
         style="display: none;"
     >
-        <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-10 text-center sm:block sm:p-0">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-10 text-center sm:p-0">
             <div
                 x-show="show"
                 x-on:click="closeModalOnClickAway()"
@@ -29,7 +29,6 @@
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
 
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
             <div
                 x-show="show && showActiveComponent"
