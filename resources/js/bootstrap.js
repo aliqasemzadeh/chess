@@ -3,6 +3,13 @@ window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+import {Chess} from 'chess.js';
+import {Chessboard , FEN} from '@chrisoakman/chessboardjs';
+window.Chess = Chess;
+window.Chessboard = Chessboard;
+window.FEN = FEN;
+
+
 var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
 var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
@@ -48,7 +55,7 @@ themeToggleBtn.addEventListener('click', function() {
 if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark');
 } else {
-    document.documentElement.classList.remove('dark')
+    document.documentElement.classList.remove('dark');
 }
 
 /**
