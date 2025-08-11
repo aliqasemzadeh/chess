@@ -44,11 +44,19 @@ window.PlayChess = ({ initialFen, gameId, authUserId, whiteUserId, blackUserId, 
                     return;
                 }
 
+                // Prevent duplicate initialization on Livewire/Alpine re-renders
+                if (el.dataset.boardInitialized === '1') {
+                    console.warn('Chessboard already initialized on this element, skipping re-init');
+                    return;
+                }
+
                 // Get piece sprite URL
                 const pieceSpriteUrl = window.CmChessboardPieces?.stauntyUrl;
                 console.log('Piece sprite URL:', pieceSpriteUrl);
 
                 try {
+                    // Ensure container is clean before first init
+                    el.innerHTML = '';
                     this.board = new Chessboard(el, {
                         position: this.fen,
                         style: {
@@ -57,6 +65,8 @@ window.PlayChess = ({ initialFen, gameId, authUserId, whiteUserId, blackUserId, 
                             pieces: pieceSpriteUrl ? { file: pieceSpriteUrl } : undefined
                         }
                     });
+                    // Mark as initialized to avoid duplicates on subsequent inits
+                    el.dataset.boardInitialized = '1';
                     console.log('Chessboard initialized successfully');
                 } catch (error) {
                     console.error('Failed to initialize chessboard:', error);
