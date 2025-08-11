@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User\Game;
 
+use App\Events\GameMoveEvent;
 use App\Jobs\GameMoveJob;
 use App\Models\Chess\Game;
 use App\Models\Chess\Move;
@@ -39,7 +40,6 @@ class Play extends Component
      * Persist a move after client-side validation by chess.js.
      * $payload should contain: from, to, san, fen_before, fen_after, meta(optional)
      */
-    #[On('move-saved')]
     public function saveMove(array $payload): void
     {
         $user = Auth::user();
@@ -85,7 +85,7 @@ class Play extends Component
         $this->game->load(['moves', 'white', 'black']);
 
         // Broadcast the move to other subscribers
-        broadcast(new GameMoveJob(
+        broadcast(new GameMoveEvent(
             $this->game->id,
             [
                 'from' => $move->from,
@@ -95,7 +95,7 @@ class Play extends Component
                 'user_id' => $move->user_id,
             ],
             $this->game->fen
-        ));
+        ))->toOthers();
 
         // Dispatch browser event (optional in-UI hook)
         $this->dispatch('move-saved', fen: $this->fen);
@@ -104,6 +104,7 @@ class Play extends Component
     /**
      * Handle move from client-side JavaScript
      */
+    #[On('client-move')]
     public function handleMove(array $payload): void
     {
         $this->saveMove($payload);
