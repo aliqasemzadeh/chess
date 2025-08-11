@@ -13,7 +13,7 @@
                      x-init="init()"
                      class="flex flex-col items-center">
 
-                    <div id="board" class="mb-4" wire:ignore></div>
+                    <div id="board" class="mb-4 w-full max-w-[480px] aspect-square" wire:ignore></div>
 
                     <div class="flex items-center gap-2">
                         <span class="text-sm text-gray-700 dark:text-gray-300">FEN:</span>
@@ -48,32 +48,43 @@
                     return (turn === 'w' && userColor === 'white') || (turn === 'b' && userColor === 'black');
                 },
                 init() {
+                    // chess.js provided via window.Chess from app.js
                     this.game = new Chess(this.fen);
 
-                    const cfg = {
-                        position: this.fen,
-                        draggable: true,
-                        pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png',
-                        onDragStart: (source, piece) => {
-                            this.error = '';
-                            // Prevent moving opponent pieces or when game over
-                            if (this.game.game_over() || !this.isUsersTurn()) return false;
-                            if ((this.game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-                                (this.game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-                                return false;
-                            }
-                        },
-                        onDrop: (source, target) => {
-                            // Try move with chess.js
-                            const move = this.game.move({ from: source, to: target, promotion: 'q' });
-                            if (move === null) {
-                                this.error = '{{ __('حرکت نامعتبر است') }}';
-                                return 'snapback';
-                            }
+                    // cm-chessboard provided via window.CmChessboard from app.js
+                    const { Chessboard, COLOR, INPUT_EVENT_TYPE } = window.CmChessboard || {};
 
-                            // Valid move: update board and FEN
+                    const el = document.getElementById('board');
+
+                    this.board = new Chessboard(el, {
+                        position: this.fen,
+                        assetsUrl: 'https://shaack.com/projekte/cm-chessboard/assets/',
+                        sprite: {
+                            url: 'https://shaack.com/projekte/cm-chessboard/assets/images/chessboard-sprite-staunty.svg'
+                        },
+                        style: { cssClass: 'cm-default', showCoordinates: true }
+                    });
+
+                    // Enable move input and validate with chess.js
+                    const myColor = this.colorForUser(authUserId) === 'white' ? COLOR.white : COLOR.black;
+                    this.board.enableMoveInput((event) => {
+                        this.error = '';
+                        if (event.type === INPUT_EVENT_TYPE.moveInputStarted) {
+                            if (this.game.game_over() || !this.isUsersTurn()) return false;
+                            return true;
+                        }
+                        if (event.type === INPUT_EVENT_TYPE.validateMoveInput) {
+                            const from = event.squareFrom;
+                            const to = event.squareTo;
                             const fenBefore = this.fen;
+                            const move = this.game.move({ from, to, promotion: 'q' });
+                            if (!move) {
+                                this.error = '{{ __('حرکت نامعتبر است') }}';
+                                return false; // snap back
+                            }
                             this.fen = this.game.fen();
+                            // Reflect on board
+                            this.board.setPosition(this.fen, true);
 
                             // Update move list (UI only)
                             const li = document.createElement('li');
@@ -82,23 +93,20 @@
 
                             // Persist via Livewire
                             const payload = {
-                                from: source,
-                                to: target,
+                                from,
+                                to,
                                 san: move.san,
                                 fen_before: fenBefore,
                                 fen_after: this.fen,
                                 meta: { check: this.game.in_check(), checkmate: this.game.in_checkmate(), draw: this.game.in_draw() }
                             };
-
-                            // Call Livewire saveMove
                             $wire.saveMove(payload);
-                        },
-                        onSnapEnd: () => {
-                            this.board.position(this.fen);
+                            return true;
                         }
-                    };
-
-                    this.board = Chessboard('board', cfg);
+                        if (event.type === INPUT_EVENT_TYPE.moveInputCanceled) {
+                            return true;
+                        }
+                    }, myColor);
 
                     // Subscribe to broadcast updates for this game
                     if (window.Echo) {
@@ -108,7 +116,7 @@
                                 if (e && e.fen) {
                                     this.fen = e.fen;
                                     this.game.load(e.fen);
-                                    this.board.position(e.fen, true);
+                                    this.board.setPosition(e.fen, true);
                                     // Append move if present
                                     if (e.move && e.move.san) {
                                         const li = document.createElement('li');
@@ -124,7 +132,7 @@
                         if (event && event.detail && event.detail.fen) {
                             this.fen = event.detail.fen;
                             this.game.load(this.fen);
-                            this.board.position(this.fen, true);
+                            this.board.setPosition(this.fen, true);
                         }
                     });
                 },
