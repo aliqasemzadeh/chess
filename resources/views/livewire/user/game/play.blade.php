@@ -8,7 +8,8 @@
                         gameId: @js($game->id),
                         authUserId: @js(auth()->id()),
                         whiteUserId: @js($game->white_user_id),
-                        blackUserId: @js($game->black_user_id)
+                        blackUserId: @js($game->black_user_id),
+                        currentTurn: @js($game->turn)
                     })"
                      x-init="init()"
                      class="flex flex-col items-center">
@@ -21,6 +22,10 @@
                     </div>
 
                     <div class="mt-3 text-sm text-gray-600 dark:text-gray-300" x-show="error" x-text="error"></div>
+
+                    <div class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                        <span x-text="'Turn: ' + (currentTurn === 'white' ? 'White' : 'Black')"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,131 +36,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function chessPlay({ initialFen, gameId, authUserId, whiteUserId, blackUserId }) {
-            return {
-                fen: initialFen,
-                board: null,
-                game: null,
-                error: '',
-                colorForUser(userId) {
-                    return userId === whiteUserId ? 'white' : (userId === blackUserId ? 'black' : null);
-                },
-                isUsersTurn() {
-                    const turn = this.game.turn(); // 'w' or 'b'
-                    const userColor = this.colorForUser(authUserId);
-                    return (turn === 'w' && userColor === 'white') || (turn === 'b' && userColor === 'black');
-                },
-                init() {
-                    // chess.js provided via window.Chess from app.js
-                    this.game = new Chess(this.fen);
-
-                    // cm-chessboard provided via window.CmChessboard from app.js
-                    const { Chessboard, COLOR, INPUT_EVENT_TYPE } = window.CmChessboard || {};
-
-                    const el = document.getElementById('board');
-
-                    this.board = new Chessboard(el, {
-                        position: this.fen,
-                        // Use Vite-built same-origin piece sprite to avoid CORS
-                        style: {
-                            cssClass: 'cm-default',
-                            showCoordinates: true,
-                            pieces: { file: (window.CmChessboardPieces ? window.CmChessboardPieces.stauntyUrl : undefined) }
-                        }
-                    });
-
-                    // Enable move input and validate with chess.js
-                    const myColor = this.colorForUser(authUserId) === 'white' ? COLOR.white : COLOR.black;
-                    this.board.enableMoveInput((event) => {
-                        this.error = '';
-                        if (event.type === INPUT_EVENT_TYPE.moveInputStarted) {
-                            if (this.game.isGameOver() || !this.isUsersTurn()) return false;
-                            return true;
-                        }
-                        if (event.type === INPUT_EVENT_TYPE.validateMoveInput) {
-                            const from = event.squareFrom;
-                            const to = event.squareTo;
-                            const fenBefore = this.fen;
-
-                            // Pre-validate using chess.js generated legal moves to avoid exceptions
-                            const legal = this.game.moves({ square: from, verbose: true }) || [];
-                            const candidate = legal.find(m => m.to === to);
-                            if (!candidate) {
-                                this.error = '{{ __('حرکت نامعتبر است') }}';
-                                return false; // snap back
-                            }
-
-                            let move;
-                            try {
-                                // Use the candidate so chess.js is guaranteed to accept it
-                                move = this.game.move({ from, to, promotion: candidate.promotion || 'q' });
-                            } catch (e) {
-                                console.error('Invalid move attempt caught:', e);
-                                this.error = '{{ __('حرکت نامعتبر است') }}';
-                                return false; // snap back
-                            }
-                            if (!move) {
-                                this.error = '{{ __('حرکت نامعتبر است') }}';
-                                return false; // snap back
-                            }
-
-                            this.fen = this.game.fen();
-                            // Reflect on board
-                            this.board.setPosition(this.fen, true);
-
-                            // Update move list (UI only)
-                            const li = document.createElement('li');
-                            li.textContent = move.san;
-                            document.getElementById('moveList').appendChild(li);
-
-                            // Persist via Livewire
-                            const payload = {
-                                from,
-                                to,
-                                san: move.san,
-                                fen_before: fenBefore,
-                                fen_after: this.fen,
-                                meta: { check: this.game.isCheck(), checkmate: this.game.isCheckmate(), draw: this.game.isDraw() }
-                            };
-                            $wire.saveMove(payload);
-                            return true;
-                        }
-                        if (event.type === INPUT_EVENT_TYPE.moveInputCanceled) {
-                            return true;
-                        }
-                    }, myColor);
-
-                    // Subscribe to broadcast updates for this game
-                    if (window.Echo) {
-                        window.Echo.private('game.' + gameId)
-                            .listen('.game.move', (e) => {
-                                // Another player's move: update local board/FEN
-                                if (e && e.fen) {
-                                    this.fen = e.fen;
-                                    this.game.load(e.fen);
-                                    this.board.setPosition(e.fen, true);
-                                    // Append move if present
-                                    if (e.move && e.move.san) {
-                                        const li = document.createElement('li');
-                                        li.textContent = e.move.san;
-                                        document.getElementById('moveList').appendChild(li);
-                                    }
-                                }
-                            });
-                    }
-
-                    // Listen to Livewire browser event to sync local state when I move
-                    window.addEventListener('move-saved', (event) => {
-                        if (event && event.detail && event.detail.fen) {
-                            this.fen = event.detail.fen;
-                            this.game.load(this.fen);
-                            this.board.setPosition(this.fen, true);
-                        }
-                    });
-                },
-            }
-        }
-    </script>
 </div>
+
+

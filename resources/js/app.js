@@ -1,6 +1,5 @@
 import './bootstrap';
 import 'flowbite';
-import 'cm-chessboard/assets/chessboard.css';
 
 // Import chess.js and cm-chessboard and expose to window for Alpine/Blade inline scripts
 import { Chess } from 'chess.js';
@@ -13,3 +12,10 @@ window.Chess = Chess;
 window.CmChessboard = { Chessboard, COLOR, INPUT_EVENT_TYPE };
 window.CmChessboardPieces = { stauntyUrl: stauntyPiecesUrl };
 
+// Debug logging to ensure assets are loaded
+console.log('Chess.js loaded:', !!window.Chess);
+console.log('CmChessboard loaded:', !!window.CmChessboard);
+console.log('Piece sprite URL:', window.CmChessboardPieces?.stauntyUrl);
+
+
+import './chess';

@@ -35,6 +35,7 @@ class Play extends Component
      * Persist a move after client-side validation by chess.js.
      * $payload should contain: from, to, san, fen_before, fen_after, meta(optional)
      */
+    #[On('move-saved')]
     public function saveMove(array $payload): void
     {
         $user = Auth::user();
@@ -87,5 +88,13 @@ class Play extends Component
 
         // Dispatch browser event (optional in-UI hook)
         $this->dispatch('move-saved', fen: $this->fen);
+    }
+
+    /**
+     * Handle move from client-side JavaScript
+     */
+    public function handleMove(array $payload): void
+    {
+        $this->saveMove($payload);
     }
 }

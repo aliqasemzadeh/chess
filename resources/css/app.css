@@ -1,5 +1,6 @@
 @import "vazirmatn/Vazirmatn-font-face.css";
 @import 'tailwindcss';
+@import 'cm-chessboard/assets/chessboard.css';
 
 @import "flowbite/src/themes/default.css";
 
