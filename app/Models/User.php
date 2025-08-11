@@ -48,6 +48,16 @@ class User extends Authenticatable
     }
 
     /**
+     * All games where the user participates (as white or black).
+     * Note: uses hasMany base with orWhere to include black side as well.
+     */
+    public function games()
+    {
+        return $this->hasMany(Game::class, 'white_user_id')
+            ->orWhere('black_user_id', $this->id);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
